@@ -14,9 +14,9 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                {name: "John C.", salary: 4000, increase: false, id: 1},
-                {name: "Alex M.", salary: 8000, increase: true, id: 2},
-                {name: "Carl W.", salary: 6000, increase: false, id: 3},
+                {name: "John C.", salary: 4000, increase: false, rise:true, id: 1},
+                {name: "Alex M.", salary: 8000, increase: true, rise:false, id: 2},
+                {name: "Carl W.", salary: 6000, increase: false, rise:false, id: 3},
             ]
         };
         this.maxId = 4;
@@ -30,34 +30,44 @@ class App extends Component {
         })
     }
 
-    addItem = (name, salary, increase = false) => {
+    addItem = (name, salary) => {
         const newData = this.state.data
         newData.push({
             name: name,
             salary: salary,
-            increase: increase,
+            increase: false,
+            rise: false,
             id: this.maxId,
         });
         this.setState({
             data: newData
         })
-        // this.setState(({data}) => {
-        //     return {
-        //         data: data.push({
-        //             name: name,
-        //             salary: salary,
-        //             increase: increase,
-        //             id: this.maxId,
-        //         })
-        //     }
-        // })
         this.maxId += 1;
     }
 
+    onToggleIncrease = (id) => {
+        this.setState(({data}) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return {...item, increase: !item.increase}
+                }
+                return item;
+            })
+        }))
+    }
+
+    onToggleRise = (id) => {
+        console.log(`Rise this ${id}`);
+    }
+
     render() {
+        const totalCount = this.state.data.length;
+        const increaseCount = this.state.data.reduce((count, current) => current.increase ? ++count : count, 0)
         return (
             <div className="app">
-                <AppInfo/>
+                <AppInfo
+                    totalCount={totalCount}
+                    increaseCount={increaseCount}/>
     
                 <div className="search-panel">
                     <SearchPanel/>
@@ -65,7 +75,9 @@ class App extends Component {
                 </div>
                 <EmployeesList 
                     data={this.state.data}
-                    onDelete={this.deleteItem}/>
+                    onDelete={this.deleteItem}
+                    onToggleIncrease={this.onToggleIncrease}
+                    onToggleRise={this.onToggleRise}/>
                 <EmployeesAddForm
                     onSubmit={this.addItem}/>
             </div>
