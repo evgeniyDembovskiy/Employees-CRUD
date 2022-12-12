@@ -1,7 +1,6 @@
 import "./app-info.css";
 
-const AppInfo = (props) => {
-    const {totalCount, increaseCount} = props;
+const AppInfo = ({totalCount, increaseCount}) => {
     return (
         <div className="app-info">
             <h1>Учет сотрудников в компании N</h1>
