@@ -7,7 +7,7 @@ import EmployeesList from '../employees-list/employees-list';
 import EmployeesAddForm from '../employees-add-form/employees-add-form';
 
 
-import "./app.css";
+import "./app.scss";
 
 class App extends Component {
     constructor(props) {

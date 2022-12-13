@@ -1,6 +1,6 @@
 import { Component } from "react/cjs/react.production.min";
 
-import "./search-panel.css";
+import "./search-panel.scss";
 
 class SearchPanel extends Component  {
     constructor(props) {
